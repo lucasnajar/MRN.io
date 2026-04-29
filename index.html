@@ -20,6 +20,8 @@
 
   * { margin:0; padding:0; box-sizing:border-box; }
 
+  html { scroll-behavior: smooth; }
+
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--light-bg);
@@ -39,6 +41,190 @@
     overflow: hidden;
     padding: 60px 40px;
     text-align: center;
+  }
+
+  /* ===== STICKY NAV ===== */
+  .sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(11,31,58,0.95);
+    backdrop-filter: blur(10px);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    border-bottom: 1px solid rgba(200,151,58,0.2);
+  }
+
+  .sticky-nav.visible { transform: translateY(0); }
+
+  .sticky-nav .sn-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--white);
+  }
+
+  .sticky-nav .sn-logo span { color: var(--gold); }
+
+  .sticky-nav .sn-links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .sticky-nav .sn-links a {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+
+  .sticky-nav .sn-links a:hover {
+    color: var(--gold);
+    background: rgba(200,151,58,0.1);
+  }
+
+  /* ===== SUMMARY / TABLE OF CONTENTS ===== */
+  .summary-section {
+    background: var(--white);
+    padding: 64px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .summary-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .summary-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 4px;
+    color: var(--navy);
+  }
+
+  .summary-header h2 span { color: var(--gold); }
+
+  .summary-header p {
+    font-size: 14px;
+    color: var(--slate);
+    margin-top: 6px;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .summary-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--light-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(11,31,58,0.10);
+    border-color: var(--gold);
+  }
+
+  .summary-card .sc-emoji {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .summary-card .sc-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .summary-card .sc-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .summary-card .sc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .summary-card .sc-arrow {
+    margin-left: auto;
+    font-size: 18px;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .summary-card:hover .sc-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    background: var(--navy);
+    color: var(--gold);
+    border: 1px solid rgba(200,151,58,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+    z-index: 999;
+    text-decoration: none;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .back-to-top:hover {
+    transform: translateY(-3px);
+    background: var(--gold);
+    color: var(--navy);
   }
 
   .cover::before {
@@ -149,6 +335,14 @@
     text-transform: uppercase;
     color: var(--gold-light);
     font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .badge:hover {
+    background: var(--gold);
+    color: var(--navy);
   }
 
   .cover-year {
@@ -744,6 +938,10 @@
     .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
     .section-number { font-size: 48px; }
     .logo-name { font-size: 48px; }
+    .summary-section { padding: 50px 24px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .sticky-nav { padding: 0 16px; }
+    .sticky-nav .sn-links a { font-size: 9px; padding: 4px 6px; }
   }
 
   @media print {
@@ -783,11 +981,11 @@
     <div class="cover-divider"></div>
     <p class="cover-subtitle">Representação comercial especializada nos melhores segmentos de alimentos para o mercado brasileiro</p>
     <div class="cover-badges">
-      <div class="badge">Bacalhau Premium</div>
-      <div class="badge">Pescados Selecionados</div>
-      <div class="badge">Carnes Importadas</div>
-      <div class="badge">Vinhos Importados</div>
-      <div class="badge">Frutas Secas &amp; Gourmet</div>
+      <a href="#bacalhaus" class="badge">Bacalhau Premium</a>
+      <a href="#pescados" class="badge">Pescados Selecionados</a>
+      <a href="#carnes" class="badge">Carnes Importadas</a>
+      <a href="#vinhos" class="badge">Vinhos Importados</a>
+      <a href="#frutas-secas" class="badge">Frutas Secas &amp; Gourmet</a>
     </div>
   </div>
 </div>
@@ -832,10 +1030,94 @@
   </div>
 </div>
 
+<!-- ===== SUMMARY / TABLE OF CONTENTS ===== -->
+<div class="summary-section" id="sumario">
+  <div class="summary-inner">
+    <div class="summary-header">
+      <h2>Sumário de <span>Categorias</span></h2>
+      <p>Navegue pelo nosso portfólio completo de produtos</p>
+    </div>
+    <div class="summary-grid">
+      <a href="#bacalhaus" class="summary-card">
+        <span class="sc-emoji">🐟</span>
+        <div class="sc-info">
+          <span class="sc-num">01</span>
+          <span class="sc-title">Bacalhaus</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#pescados" class="summary-card">
+        <span class="sc-emoji">🦐</span>
+        <div class="sc-info">
+          <span class="sc-num">02</span>
+          <span class="sc-title">Pescados</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#carnes" class="summary-card">
+        <span class="sc-emoji">🥩</span>
+        <div class="sc-info">
+          <span class="sc-num">03</span>
+          <span class="sc-title">Carnes Importadas</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#frutas-secas" class="summary-card">
+        <span class="sc-emoji">🥜</span>
+        <div class="sc-info">
+          <span class="sc-num">04</span>
+          <span class="sc-title">Frutas Secas &amp; Castanhas</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#temperos" class="summary-card">
+        <span class="sc-emoji">🌶️</span>
+        <div class="sc-info">
+          <span class="sc-num">05</span>
+          <span class="sc-title">Temperos &amp; Especiarias</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#graos" class="summary-card">
+        <span class="sc-emoji">🌾</span>
+        <div class="sc-info">
+          <span class="sc-num">06</span>
+          <span class="sc-title">Grãos, Sementes &amp; Cereais</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#conservas" class="summary-card">
+        <span class="sc-emoji">🫙</span>
+        <div class="sc-info">
+          <span class="sc-num">07</span>
+          <span class="sc-title">Conservas &amp; Especialidades</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#laticinios" class="summary-card">
+        <span class="sc-emoji">🧀</span>
+        <div class="sc-info">
+          <span class="sc-num">08</span>
+          <span class="sc-title">Laticínios</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+      <a href="#vinhos" class="summary-card">
+        <span class="sc-emoji">🍷</span>
+        <div class="sc-info">
+          <span class="sc-num">09</span>
+          <span class="sc-title">Vinhos Importados</span>
+        </div>
+        <span class="sc-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- ================================================================ -->
 <!-- CATEGORIA 1: BACALHAUS -->
 <!-- ================================================================ -->
-<div class="cat-banner">
+<div id="bacalhaus" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🐟</span>
     <h2>01 — <span>Bacalhaus</span></h2>
@@ -998,7 +1280,7 @@
 <!-- CATEGORIA 2: PESCADOS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="pescados" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🦐</span>
     <h2>02 — <span>Pescados</span></h2>
@@ -1148,7 +1430,7 @@
 <!-- CATEGORIA 3: CARNES IMPORTADAS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="carnes" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🥩</span>
     <h2>03 — <span>Carnes Importadas</span></h2>
@@ -1277,7 +1559,7 @@
 <!-- CATEGORIA 4: FRUTAS SECAS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="frutas-secas" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🥜</span>
     <h2>04 — <span>Frutas Secas &amp; Castanhas</span></h2>
@@ -1333,7 +1615,7 @@
 <!-- CATEGORIA 5: TEMPEROS & ESPECIARIAS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="temperos" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🌶️</span>
     <h2>05 — <span>Temperos &amp; Especiarias</span></h2>
@@ -1432,7 +1714,7 @@
 <!-- CATEGORIA 6: GRÃOS & CEREAIS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="graos" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🌾</span>
     <h2>06 — <span>Grãos, Sementes &amp; Cereais</span></h2>
@@ -1480,7 +1762,7 @@
 <!-- CATEGORIA 7: CONSERVAS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="conservas" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🫙</span>
     <h2>07 — <span>Conservas &amp; Especialidades</span></h2>
@@ -1572,7 +1854,7 @@
 <!-- CATEGORIA 8: LÁCTEOS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="laticinios" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🧀</span>
     <h2>08 — <span>Laticínios</span></h2>
@@ -1617,7 +1899,7 @@
 <!-- CATEGORIA 9: VINHOS -->
 <!-- ================================================================ -->
 <div class="section-divider"></div>
-<div class="cat-banner">
+<div id="vinhos" class="cat-banner">
   <div class="cat-banner-inner">
     <span class="cat-banner-emoji">🍷</span>
     <h2>09 — <span>Vinhos Importados</span></h2>
@@ -1786,15 +2068,15 @@
     <div>
       <h4>Categorias</h4>
       <ul>
-        <li>01 — Bacalhaus</li>
-        <li>02 — Pescados</li>
-        <li>03 — Carnes Importadas</li>
-        <li>04 — Frutas Secas</li>
-        <li>05 — Temperos</li>
-        <li>06 — Grãos e Cereais</li>
-        <li>07 — Conservas</li>
-        <li>08 — Laticínios</li>
-        <li>09 — Vinhos</li>
+        <li><a href="#bacalhaus" style="color:rgba(255,255,255,0.6);text-decoration:none;">01 — Bacalhaus</a></li>
+        <li><a href="#pescados" style="color:rgba(255,255,255,0.6);text-decoration:none;">02 — Pescados</a></li>
+        <li><a href="#carnes" style="color:rgba(255,255,255,0.6);text-decoration:none;">03 — Carnes Importadas</a></li>
+        <li><a href="#frutas-secas" style="color:rgba(255,255,255,0.6);text-decoration:none;">04 — Frutas Secas</a></li>
+        <li><a href="#temperos" style="color:rgba(255,255,255,0.6);text-decoration:none;">05 — Temperos</a></li>
+        <li><a href="#graos" style="color:rgba(255,255,255,0.6);text-decoration:none;">06 — Grãos e Cereais</a></li>
+        <li><a href="#conservas" style="color:rgba(255,255,255,0.6);text-decoration:none;">07 — Conservas</a></li>
+        <li><a href="#laticinios" style="color:rgba(255,255,255,0.6);text-decoration:none;">08 — Laticínios</a></li>
+        <li><a href="#vinhos" style="color:rgba(255,255,255,0.6);text-decoration:none;">09 — Vinhos</a></li>
       </ul>
     </div>
     <div>
@@ -1814,4 +2096,62 @@
 </div>
 
 </body>
+
+<!-- ===== STICKY NAV ===== -->
+<nav class="sticky-nav" id="stickyNav">
+  <div class="sn-logo"><span>MRN</span> VENDAS</div>
+  <div class="sn-links">
+    <a href="#bacalhaus">Bacalhaus</a>
+    <a href="#pescados">Pescados</a>
+    <a href="#carnes">Carnes</a>
+    <a href="#frutas-secas">Frutas Secas</a>
+    <a href="#temperos">Temperos</a>
+    <a href="#graos">Grãos</a>
+    <a href="#conservas">Conservas</a>
+    <a href="#laticinios">Laticínios</a>
+    <a href="#vinhos">Vinhos</a>
+  </div>
+</nav>
+
+<!-- ===== BACK TO TOP ===== -->
+<a href="#" class="back-to-top" id="backToTop" title="Voltar ao topo">↑</a>
+
+<script>
+(function() {
+  var nav = document.getElementById('stickyNav');
+  var btn = document.getElementById('backToTop');
+  var introEnd = document.querySelector('.intro-band').getBoundingClientRect().bottom + window.scrollY;
+
+  window.addEventListener('scroll', function() {
+    var scrollY = window.scrollY || window.pageYOffset;
+    if (scrollY > introEnd - 100) {
+      nav.classList.add('visible');
+    } else {
+      nav.classList.remove('visible');
+    }
+    if (scrollY > 600) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
+
+  var links = document.querySelectorAll('.sticky-nav a, .summary-card, .cover-badges a');
+  links.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var targetId = this.getAttribute('href');
+      if (targetId && targetId.charAt(0) === '#') {
+        e.preventDefault();
+        var target = document.querySelector(targetId);
+        if (target) {
+          var offset = nav.classList.contains('visible') ? 56 : 0;
+          var top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+})();
+</script>
+
 </html>
